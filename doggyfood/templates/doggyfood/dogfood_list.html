@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kosher Doggy - Dog Food Comparator</title>
-</head>
-<body>
-<h1>Test</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+    {% if object_list.count %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Ingredients</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>
+                        <img src="{{ object.photo.url }}">
+                        </img>
+                    </td>
+                    <td>{{ object.title }}</td>
+                    <td>{{ object.description }}</td>
+                    <td>
+                        {{ object.ingredients.all | join:', ' }}
+{#                        {% for ing in  object.ingredient.all  %}#}
+{#                            {{ ing.name }}#}
+{#                            {% if not forloop.last %}, {% endif %}#}
+{#                        {% endfor %}#}
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+{#                <th align="right">total</th>#}
+{#                <th>${{ view.total }}</th>#}
+{#                <th></th>#}
+            </tr>
+            </tfoot>
+        </table>
+
+        {% bootstrap_pagination page_obj %}
+
+    {% else %}
+        No dog foods in Database yet!
+    {% endif %}
+
+
+{% endblock %}

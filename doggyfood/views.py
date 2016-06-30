@@ -6,10 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from . import models
 
-# Create your views here.
-
-
-
 
 class LoggedInMixin:
     def dispatch(self, request, *args, **kwargs):
@@ -18,13 +14,19 @@ class LoggedInMixin:
             return redirect(url)
         return super().dispatch(request, *args, **kwargs)
 
+
 class ListFoodsView(ListView):
     model = models.DogFood
     paginate_by = 12
     page_title = _("Home")
 
-    # def get_queryset(self):
-    #     return super().get_queryset().filter(account__user=self.request.user)
+    # def sommodel_list(self):
+    #     return SomeModel.objects.all()
     #
-    # def total(self):
-    #     return self.get_queryset().aggregate(sum=Sum('amount'))['sum']
+    # def get_queryset(self):
+    #     res = super().get_queryset().filter(ingredient=models.Ingredient.get(id=self.kwargs['ingredient'])
+    #     return res
+        #
+        # def total(self):
+        #     return self.get_queryset().aggregate(sum=Sum('amount'))['sum']
+

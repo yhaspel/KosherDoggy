@@ -1,0 +1,60 @@
+{% load i18n staticfiles bootstrap3 %}
+{% get_current_language_bidi as BIDI %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}
+            {{ view.page_title }}
+        {% endblock %}
+    </title>
+    {% if BIDI %}
+        <link href="{% static "bootstrap/css/bootstrap-rtl.css" %}"
+              rel="stylesheet">
+    {% else %}
+        <link href="{% static "bootstrap/css/bootstrap.css" %}"
+              rel="stylesheet">
+    {% endif %}
+</head>
+<body{% if BIDI %} dir="rtl"{% endif %}>
+
+<div class="container">
+
+    <div class="pull-right">
+{#        <a href="{% url "blog:list" %}">Blog</a>#}
+{#        |#}
+{#        <a href="{% url "expenses:create_account" %}">Add Account</a>#}
+{#        |#}
+{#        <a href="{% url "expenses:create" %}">Add Expense</a>#}
+{#        |#}
+{#        {{ user }}#}
+{#        |#}
+{#        <a href="{% url 'logout' %}">Logout</a>#}
+    </div>
+
+    <h1>
+        Kosher Doggy
+    </h1>
+
+    {% bootstrap_messages %}
+
+    <div>
+
+        {% block content %}
+            CONTENT
+        {% endblock %}
+
+    </div>
+
+</div>
+
+<script src="{% static "jquery.js" %}"></script>
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>
