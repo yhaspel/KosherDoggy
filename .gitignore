@@ -1,0 +1,5 @@
+__pycache__
+/uploads
+db.sqlite3
+.idea
+local_settings.py
