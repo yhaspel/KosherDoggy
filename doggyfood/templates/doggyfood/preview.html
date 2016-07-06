@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+    <div class="page">
+        <h2>{{ object.title }}</h2>
+        <p>{{ object.description }}</p>
+        <div class="page-body">
+            <img class="image-prev" src="{{ object.photo.url }}" alt="No Image Found">
+            <h4>Ingredients:</h4>
+            <p>{{ object.ingredients.all | join:', ' }}</p>
+        </div>
+    </div>
+{% endblock %}

@@ -4,44 +4,25 @@
 {% block content %}
 
     {% if object_list.count %}
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Ingredients</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="row">
             {% for object in object_list %}
-                <tr>
-                    <td>
-                        <img src="{{ object.photo.url }}">
-                        </img>
-                    </td>
-                    <td>{{ object.title }}</td>
-                    <td>{{ object.description }}</td>
-                    <td>
-                        {{ object.ingredients.all | join:', ' }}
-{#                        {% for ing in  object.ingredient.all  %}#}
-{#                            {{ ing.name }}#}
-{#                            {% if not forloop.last %}, {% endif %}#}
-{#                        {% endfor %}#}
+                <div class="col-cs-12 col-sm-6 col-md-4 col-lg-3">
+                    <a class="card-link" href="{% url "doggyfood:preview" id=object.id %}">
+                        <div class="card" >
+                            <img class="card-img" src="{{ object.photo.url }}" alt="No Image Found">
+                            <div class="card-content">
+                                <h4 class="title">{{ object.title }}</h4>
+                                <p class="description">{{ object.description }}</p>
+                                <hr>
+                                <h5>Ingredients</h5>
+                                <p class="ingredients">{{ object.ingredients.all | join:', ' }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-                    </td>
-                </tr>
             {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-{#                <th align="right">total</th>#}
-{#                <th>${{ view.total }}</th>#}
-{#                <th></th>#}
-            </tr>
-            </tfoot>
-        </table>
-
+        </div>
         {% bootstrap_pagination page_obj %}
 
     {% else %}

@@ -19,28 +19,44 @@
         <link href="{% static "bootstrap/css/bootstrap.css" %}"
               rel="stylesheet">
     {% endif %}
+    <link rel="stylesheet" href="{% static "style.css" %}">
 </head>
 <body{% if BIDI %} dir="rtl"{% endif %}>
 
 <div class="container">
 
     <div class="pull-right">
-{#        <a href="{% url "blog:list" %}">Blog</a>#}
-{#        |#}
-{#        <a href="{% url "expenses:create_account" %}">Add Account</a>#}
-{#        |#}
-{#        <a href="{% url "expenses:create" %}">Add Expense</a>#}
-{#        |#}
-{#        {{ user }}#}
-{#        |#}
-{#        <a href="{% url 'logout' %}">Logout</a>#}
+        {#        <a href="{% url "blog:list" %}">Blog</a>#}
+        {#        |#}
+        {#        <a href="{% url "expenses:create_account" %}">Add Account</a>#}
+        {#        |#}
+        {#        <a href="{% url "expenses:create" %}">Add Expense</a>#}
+        {#        |#}
+        {#        {{ user }}#}
+        {#        |#}
+        {#        <a href="{% url 'logout' %}">Logout</a>#}
     </div>
 
-    <h1>
-        Kosher Doggy
-    </h1>
+    <a class="header-link" href="{% url "doggyfood:list" %}">
+        <h1>
+            Kosher Doggy
+        </h1>
+    </a>
 
     {% bootstrap_messages %}
+
+    {% if view.search == "active" %}
+        <form id="search-form" action="{% url 'doggyfood:list' %}" method="get" accept-charset="utf-8">
+            <div class="searchbar">
+                <input class="form-control search" id="search-box" name="q" type="text" placeholder="Search by dog food, ingredients or description...">
+                <button class="btn btn-secondary" id="search-btn" type="submit">
+                    {#                <i class="fa fa-search"></i>#}
+                    Search
+                </button>
+            </div>
+        </form>
+        {#        <input type="text" name="q" class="form-control search" placeholder="Search for..."/>#}
+    {% endif %}
 
     <div>
 
