@@ -1,3 +1,5 @@
+import os
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +19,7 @@ class Category(models.Model):
 class DogFood(models.Model):
     title = models.TextField(max_length=200)
     description = models.TextField(max_length=1000)
-    photo = models.ImageField(upload_to="uploads/", null=True, blank=True)
+    photo = models.ImageField(upload_to="uploads/", default=os.path.join('', 'misc', 'no-image.jpg'), null=True, blank=True)
     category = models.ManyToManyField(Category, related_name='dogfoods')
 
     # def get_absolute_url(self):
@@ -29,7 +31,6 @@ class DogFood(models.Model):
 class Ingredient(models.Model):
     dog_foods = models.ManyToManyField(DogFood, related_name='ingredients', blank=True)
     name = models.TextField(max_length=200)
-
 
     def __str__(self):
         return self.name

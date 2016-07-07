@@ -92,10 +92,16 @@ body {
 }
 
 #search-box {
-    width: 90%;
+    width: 60%;
+}
+
+#exclude-box {
+    width: 29%;
+    margin-left: 1%;
 }
 
 #search-btn {
+    min-width: 5em;
     width: 9%;
     margin-left: 1%;
 }
@@ -103,4 +109,25 @@ body {
 .searchbar {
     display: flex;
     justify-content: space-around;
+}
+
+.radio-selection {
+    margin: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.radio-selection label {
+    margin-right: 2%;
+}
+
+#checkbox-group {
+    margin: 1%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#category-select {
+    visibility: hidden;
+    height: 0;
 }

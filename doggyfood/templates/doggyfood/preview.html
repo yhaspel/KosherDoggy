@@ -6,7 +6,13 @@
         <h2>{{ object.title }}</h2>
         <p>{{ object.description }}</p>
         <div class="page-body">
-            <img class="image-prev" src="{{ object.photo.url }}" alt="No Image Found">
+            {% if object.photo %}
+                <img class="image-prev" src="{{ object.photo.url }}">
+            {% else %}
+                <img class="card-prev" alt="No Image">
+            {% endif %}
+            <h4>Category</h4>
+            <p>{{ object.category.all | join:', ' }}</p>
             <h4>Ingredients:</h4>
             <p>{{ object.ingredients.all | join:', ' }}</p>
         </div>

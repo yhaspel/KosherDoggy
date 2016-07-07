@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -8,8 +9,12 @@
             {% for object in object_list %}
                 <div class="col-cs-12 col-sm-6 col-md-4 col-lg-3">
                     <a class="card-link" href="{% url "doggyfood:preview" id=object.id %}">
-                        <div class="card" >
-                            <img class="card-img" src="{{ object.photo.url }}" alt="No Image Found">
+                        <div class="card">
+                            {% if object.photo %}
+                                <img class="card-img" src="{{ object.photo.url }}">
+                            {% else %}
+                                <img class="card-img" alt="No Image">
+                            {% endif %}
                             <div class="card-content">
                                 <h4 class="title">{{ object.title }}</h4>
                                 <p class="description">{{ object.description }}</p>
@@ -26,8 +31,11 @@
         {% bootstrap_pagination page_obj %}
 
     {% else %}
-        No dog foods in Database yet!
+        Woof! Nothing to show...
     {% endif %}
 
+{% endblock %}
 
+{% block scripts %}
+    <script src="{% static "list.js" %}"></script>
 {% endblock %}

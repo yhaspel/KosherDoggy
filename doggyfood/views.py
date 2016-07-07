@@ -1,6 +1,8 @@
 import operator
 from functools import reduce
 
+import re
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -32,17 +34,38 @@ class ListFoodsView(ListView):
     def get_queryset(self):
         result = super(ListFoodsView, self).get_queryset()
 
+        cat = self.request.GET.get('category')
+        # cat = self.request.POST.getlist('category')
         query = self.request.GET.get('q')
+        exc = self.request.GET.get('exclude')
+
         if query:
-            query_list = query.split()
+            # query_list = query.split()
+            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(query)
             result = result.filter(
-                reduce(operator.and_,
+                reduce(operator.or_,
                        (Q(ingredients__name__icontains=q) for q in query_list)) |
                 reduce(operator.and_,
                        (Q(title__icontains=q) for q in query_list)) |
                 reduce(operator.and_,
                        (Q(description__icontains=q) for q in query_list))
             )
+        if exc:
+            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(exc)
+            result = result.exclude(
+                reduce(operator.or_,
+                       (Q(ingredients__name__icontains=q) for q in query_list)))
+
+        if cat:
+            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(cat)
+            # query_list = cat.split();
+            messages.success(self.request, query_list)
+            result = result.filter(
+                reduce(operator.or_,
+                       (Q(category__name__icontains=q) for q in query_list)))
+            result = result.exclude(
+                reduce(operator.or_,
+                       (~Q(category__name__icontains=q) for q in query_list)))
 
         return result.distinct()
 

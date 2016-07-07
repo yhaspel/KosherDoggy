@@ -48,14 +48,52 @@
     {% if view.search == "active" %}
         <form id="search-form" action="{% url 'doggyfood:list' %}" method="get" accept-charset="utf-8">
             <div class="searchbar">
-                <input class="form-control search" id="search-box" name="q" type="text" placeholder="Search by dog food, ingredients or description...">
+                <input class="form-control search" id="search-box" name="q" type="text"
+                       placeholder="Search by dog food, ingredients or description...">
+                <input class="form-control search" id="exclude-box" name="exclude" type="text"
+                       placeholder="Exclude ingredients...">
                 <button class="btn btn-secondary" id="search-btn" type="submit">
-                    {#                <i class="fa fa-search"></i>#}
-                    Search
+                    <i class="fa fa-search"></i>
+                    search
                 </button>
             </div>
+            <div class="search-group">
+                <div class="radio-selection">
+                    <label class="radio-inline"><input id="all" type="radio" name="optradio" checked>All</label>
+                    <label class="radio-inline"><input id="custom" type="radio" name="optradio">Custom</label>
+                </div>
+                <div id="checkbox-group">
+                    <div class="btn-group">
+                        <div class="checkbox"><label><input type="checkbox" value="Premium">Premium</label></div>
+                        <div class="checkbox"><label><input type="checkbox" value="Super Premium">Super
+                            Premium</label>
+                        </div>
+                        <div class="checkbox"><label><input type="checkbox" value="Ultra Premium">Ultra
+                            Premium</label>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="checkbox"><label><input type="checkbox" value="Small Breed">Small
+                            Breed</label>
+                        </div>
+                        <div class="checkbox"><label><input type="checkbox" value="Medium Breed">Medium
+                            Breed</label>
+                        </div>
+                        <div class="checkbox"><label><input type="checkbox" value="Large Breed">Large
+                            Breed</label>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="checkbox"><label><input type="checkbox" value="Medical and Special">Medical
+                            and
+                            Special</label></div>
+                        <div class="checkbox"><label><input type="checkbox" value="Other">Other</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input class="form-control search" id="category-select" name="category" type="text"/>
         </form>
-        {#        <input type="text" name="q" class="form-control search" placeholder="Search for..."/>#}
     {% endif %}
 
     <div>
@@ -69,6 +107,7 @@
 </div>
 
 <script src="{% static "jquery.js" %}"></script>
+<script src="{% static "base.js" %}"></script>
 {% block scripts %}
 {% endblock %}
 
