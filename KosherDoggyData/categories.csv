@@ -1,0 +1,14 @@
+puppy,LS,food for puppies
+adult,LS,food for adult dogs
+senior,LS,food for senior dogs
+all life stages,LS,food for all life stages of dogs
+vegetarian,SN,vegetarian dog food
+sport dogs,SN,dog food for working and sport dogs
+high energy,SN,high energy dog food
+premium,QL,premium quality food
+super premium,QL,super premium quality food
+ultra premium,QL,ultra premium quality food
+small breed,DS,food for small breed dogs
+medium breed,DS,food for medium breed dogs
+large breed,DS,food for large breed dogs
+other,OT,food for other purposes

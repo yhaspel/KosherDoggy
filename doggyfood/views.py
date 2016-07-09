@@ -31,6 +31,17 @@ class ListFoodsView(ListView):
     def search(self):
         return "active"
 
+    def get_categories(self):
+        return list(set(models.Category.objects.all()))
+
+    def get_category_types(self):
+        categories = self.get_categories()
+        types = []
+        for c in categories:
+            types.append(c.type_verbose())
+        return list(set(types))
+
+
     def get_queryset(self):
         result = super(ListFoodsView, self).get_queryset()
 
@@ -68,19 +79,6 @@ class ListFoodsView(ListView):
                        (~Q(category__name__icontains=q) for q in query_list)))
 
         return result.distinct()
-
-    # def get_queryset(self):
-    #     return super().get_queryset().filter(id=1)
-
-    # def sommodel_list(self):
-    #     return SomeModel.objects.all()
-
-    # def get_queryset(self):
-    #     res = super().get_queryset().filter(ingredient=models.Ingredient.get(id=self.kwargs['ingredient'])
-    #     return res
-    #
-    # def total(self):
-    #     return self.get_queryset().aggregate(sum=Sum('amount'))['sum']
 
 
 def preview_food(request, id):

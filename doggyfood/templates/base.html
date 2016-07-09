@@ -63,33 +63,18 @@
                     <label class="radio-inline"><input id="custom" type="radio" name="optradio">Custom</label>
                 </div>
                 <div id="checkbox-group">
-                    <div class="btn-group">
-                        <div class="checkbox"><label><input type="checkbox" value="Premium">Premium</label></div>
-                        <div class="checkbox"><label><input type="checkbox" value="Super Premium">Super
-                            Premium</label>
+                    {% for t in view.get_category_types %}
+                        <div class="category-type">
+                            <h4>{{ t }}</h4>
+                            {% for cat in view.get_categories|dictsort:"type" %}
+                                {% if t == cat.type_verbose %}
+                                    <div class="checkbox"><label><input type="checkbox" value="{{ cat }}">{{ cat }}
+                                    </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                        <div class="checkbox"><label><input type="checkbox" value="Ultra Premium">Ultra
-                            Premium</label>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <div class="checkbox"><label><input type="checkbox" value="Small Breed">Small
-                            Breed</label>
-                        </div>
-                        <div class="checkbox"><label><input type="checkbox" value="Medium Breed">Medium
-                            Breed</label>
-                        </div>
-                        <div class="checkbox"><label><input type="checkbox" value="Large Breed">Large
-                            Breed</label>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <div class="checkbox"><label><input type="checkbox" value="Medical and Special">Medical
-                            and
-                            Special</label></div>
-                        <div class="checkbox"><label><input type="checkbox" value="Other">Other</label>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <input class="form-control search" id="category-select" name="category" type="text"/>
