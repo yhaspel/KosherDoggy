@@ -54,6 +54,7 @@ def populate_dogfoods():
                 brand=brand,
                 description=row[2],
                 photo=row[3],
+                food_type=row[6],
             )
 
             df = DogFood.objects.get(title=row[0])

@@ -13,7 +13,7 @@ body {
 
 .card {
     overflow: hidden;
-    padding: 1em;
+    /*padding: 1em;*/
     margin: 1em;
     background-color: skyblue;
     height: 35em;
@@ -25,7 +25,7 @@ body {
 .card-content {
     margin: 1em;
     overflow: hidden;
-    height: 45%;
+    height: 55%;
     line-height: 1.5em;
     text-decoration: none;
     color: black;
@@ -38,18 +38,22 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 40%; /* fallback */
+    height: 33%; /* fallback */
 }
 
-.ingredients {
+.ingredients,.nutritional-comp{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.card-link.card-link:hover {
+.card-link,.card-link:hover {
     color: black;
     text-decoration: none;
+}
+
+.ing-nut {
+    height: 30%;
 }
 
 .card:hover {
@@ -71,7 +75,7 @@ body {
 }
 
 .card-img {
-    height: 50%;
+    height: 40%;
     width: 100%;
 }
 

@@ -1,8 +1,10 @@
 import os
 
+from django.contrib.contenttypes.fields import GenericRelation
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from star_ratings.models import Rating
 
 
 class Category(models.Model):
@@ -63,6 +65,73 @@ class DogFood(models.Model):
                               blank=True)
     category = models.ManyToManyField(Category, related_name='dogfoods')
     ingredients = models.ManyToManyField(Ingredient, related_name='dogfoods')
+
+    DRY = 'DR'
+    RAW = 'RW'
+    CANNED = 'CN'
+    FRESH = 'FR'
+    OTHER = 'OT'
+    FOOD_TYPES = [
+        (DRY, 'Dry Food'),
+        (RAW, 'Raw Food'),
+        (CANNED, 'Canned Food'),
+        (FRESH, 'Fresh Food'),
+        (OTHER, 'Other Food'),
+    ]
+
+    food_type = models.CharField(
+        max_length=2,
+        choices=FOOD_TYPES,
+        default=DRY,
+    )
+
+    ratings = GenericRelation(Rating, related_query_name='dogfoods')
+
+    def get_rating_avg(self):
+        return self.ratings
+
+    def get_ingredient_composition(self):
+        ingredients = self.ingredients.all()
+        ing_comps = IngredientComposition.objects.all()
+        ing_with_comp = {}
+
+        for ing in ingredients:
+            ing_with_comp[ing.name] = ''
+
+        for iwc in ing_with_comp:
+            for ing_comp in ing_comps:
+                if iwc == ing_comp.ingredient.name and self == ing_comp.dog_food:
+                    ing_with_comp[iwc] = ing_comp.composition
+        iwc_list = []
+        for iwc in ing_with_comp:
+            ing_str = '{}'.format(iwc)
+            if ing_with_comp[iwc] != '':
+                ing_str += ': {}'.format(ing_with_comp[iwc])
+            iwc_list.append(ing_str)
+        return ', '.join(iwc_list)
+
+    def get_nutritional_composition(self):
+        nutritional_facts = NutritionalFact.objects.all()
+        nut_comps = NutritionalComposition.objects.all()
+        nut_with_comp = {}
+
+        for ing in nutritional_facts:
+             nut_with_comp[ing.name] = ''
+
+        for nwc in nut_with_comp:
+            for nut_comp in nut_comps:
+                if nwc == nut_comp.nutritional_fact.name and self == nut_comp.dog_food:
+                    nut_with_comp[nwc] = nut_comp.composition
+        nwc_list = []
+        for nwc in nut_with_comp:
+            nut_str = ''
+            if nut_with_comp[nwc] != '':
+                nut_str += '{}: {}%'.format(nwc, nut_with_comp[nwc])
+                nwc_list.append(nut_str)
+        return ', '.join(nwc_list)
+
+    def get_ing_comp(self):
+        return self.ingredients
 
     # def get_absolute_url(self):
     #     return reverse("doggyfood:detail", args=(self.pk,))

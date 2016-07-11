@@ -41,7 +41,6 @@ class ListFoodsView(ListView):
             types.append(c.type_verbose())
         return list(set(types))
 
-
     def get_queryset(self):
         result = super(ListFoodsView, self).get_queryset()
 
@@ -87,6 +86,9 @@ def preview_food(request, id):
     #     return result
     return render(request, "doggyfood/preview.html",
                   {
-                      'object': models.DogFood.objects.filter(pk=id).first()
+                      'object': models.DogFood.objects.filter(pk=id).first(),
+                      # 'ingredients_composition': models.get_ingredient_composition(id),
+                      'ingredients_composition': models.DogFood.objects.filter(pk=id).first().get_ingredient_composition(),
+                      'nutritional_composition': models.DogFood.objects.filter(pk=id).first().get_nutritional_composition(),
                   }
                   )

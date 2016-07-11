@@ -20,6 +20,8 @@
               rel="stylesheet">
     {% endif %}
     <link rel="stylesheet" href="{% static "style.css" %}">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    {#    <link rel="stylesheet" media="all" href="{% static "star-rating.css" %}">#}
 </head>
 <body{% if BIDI %} dir="rtl"{% endif %}>
 
@@ -91,8 +93,8 @@
 
 </div>
 
-<script src="{% static "jquery.js" %}"></script>
-<script src="{% static "base.js" %}"></script>
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/base.js" %}"></script>
 {% block scripts %}
 {% endblock %}
 
