@@ -87,6 +87,11 @@ class DogFood(models.Model):
 
     ratings = GenericRelation(Rating, related_query_name='dogfoods')
 
+    compare = models.BooleanField(default=True)
+
+    def set_compare(self):
+        self.compare = True
+
     def get_rating_avg(self):
         return self.ratings
 

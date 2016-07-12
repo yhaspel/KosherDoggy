@@ -4,22 +4,30 @@
 
 {% block content %}
     <div class="page">
-        <h2>{{ object.title }}</h2>
-        <b>({{ object.get_food_type_display }})</b>
-        <p>{{ object.description }}</p>
+
         <div class="page-body">
             {% if object.photo %}
                 <img class="image-prev" src="{{ object.photo.url }}">
             {% else %}
                 <img class="card-prev" alt="No Image">
             {% endif %}
+            <h2>{{ object.title }}</h2>
+            <b>({{ object.get_food_type_display }})</b>
+            <p>{{ object.description }}</p>
+            <br>
+            <br>
             <h4>Category</h4>
             <p>{{ object.category.all | join:', ' }}</p>
-            <h4>Ingredients:</h4>
+            <br>
+            <h4>Ingredients</h4>
             <p>{{ ingredients_composition }}</p>
+            <br>
             <h4>Nutritional Composition:</h4>
             <p>{{ nutritional_composition }}</p>
-            {% ratings object %}
+            <br>
+            <div class="rating-preview">
+                {% ratings object %}
+            </div>
         </div>
     </div>
 {% endblock %}

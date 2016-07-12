@@ -135,3 +135,7 @@ body {
     visibility: hidden;
     height: 0;
 }
+
+.rating-preview {
+    pointer-events: none;
+}
