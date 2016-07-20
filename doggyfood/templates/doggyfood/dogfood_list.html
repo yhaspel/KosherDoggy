@@ -6,31 +6,36 @@
 
     {% if object_list.count %}
         <div class="row">
+
             {% for object in object_list %}
                 <div class="col-cs-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card" id="card_{{ object.id }}">
+                        <div class="check-compare">
+                            <label for=""><input type="checkbox" name="compare-check" class="compare-check"
+                                                 id="check_{{ object.id }}"> Compare
+                            </label>
+                        </div>
                         {% if object.photo %}
                             <img class="card-img" id="img_{{ object.id }}" src="{{ object.photo.url }}">
                         {% else %}
                             <img class="card-img" id="img_{{ object.id }}" alt="No Image">
                         {% endif %}
-                        <form method="post" action="">
-                            {% csrf_token %}
-{#                            {% include "doggyfood/compare_form.html" %}#}
-                            {{ form.as_p }}
-                            <button type="submit">compare</button>
-                        </form>
+                        {#                        <form method="post" action="">#}
+                        {#                            {% csrf_token %}#}
+                        {#                            <button type="submit">compare</button>#}
+                        {#                        </form>#}
+
 
                         <a class="card-link" href="{% url "doggyfood:preview" id=object.id %}">
                             <div class="card-content" id="content_{{ object.id }}">
                                 <h4 class="title">{{ object.title }}</h4>
-                                <p class="description" id="desc_{{ object.id }}">{{ object.description }}</p>
+                                <p class="description" id="desc_{{ object.id }}">{{ object.description }}"</p>
                                 <hr>
                                 <div class="ing-nut" id="ing-nut_{{ object.id }}">
                                     <b>Ingredients: </b>
                                     <p class="ingredients">{{ object.ingredients.all | join:', ' }}</p>
                                     <b>Nutritional Composition: </b>
-                                    <p class="nutritional-comp">{{ object.get_nutritional_composition }}</p>
+                                    <p class="nutritional">{{ object.get_nutritional_composition | join:', ' }}</p>
                                 </div>
                                 <hr>
                                 {% ratings object %}

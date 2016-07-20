@@ -14,7 +14,8 @@ from django.views.generic.detail import DetailView
 # from authentication.models import LoggedInMixin, redirect_not_usr
 from django.views.generic.edit import FormMixin
 
-from . import models, forms
+from doggyfood.models import DogFood
+from . import models
 
 
 class LoggedInMixin:
@@ -43,16 +44,23 @@ class FormListView(ListView, FormMixin):
 
     # TODO: here's the problem. Post get there, how to update 'compare' BooleanField?
     def post(self, request, *args, **kwargs):
-        messages.success(request, "TEST 1") # TODO: remove
+
+        dogfood = DogFood.objects.all().first()
+        if dogfood.compare == True:
+            dogfood.compare = False
+        else:
+            dogfood.compare = True
+        dogfood.save()
+        test1 = self.get(request, *args, **kwargs)
+        messages.success(request, test1)  # TODO: remove
         # if self.request.POST.get('compare', False):
         #     messages.success(request, "TEST 2")
         #     self.request.POST['compare'] = True
         return self.get(request, *args, **kwargs)
 
 
-class ListFoodsView(FormListView):
+class ListFoodsView(ListView):
     model = models.DogFood
-    form_class = forms.CompareForm
     paginate_by = 12
     page_title = _("Home")
 
@@ -109,11 +117,30 @@ class ListFoodsView(FormListView):
 class ListCompareFoodsView(ListView):
     model = models.DogFood
     paginate_by = 12
-    page_title = _("Home")
-    template_name = 'compare.html'
+    page_title = _("Compare")
+    template_name = 'doggyfood/compare.html'
+    compared_dog_foods = []
+
+    def get_ing_comparison(self):
+        comp = set(self.compared_dog_foods[0].ingredients.all())
+        for i in range(1, len(self.compared_dog_foods)):
+            comp = comp & set(self.compared_dog_foods[i].ingredients.all()) & set(
+                self.compared_dog_foods[i - 1].ingredients.all())
+
+        return list(comp)
 
     def get_queryset(self):
-        return self.object_list.filter(compare=True)
+        result = super(ListCompareFoodsView, self).get_queryset()
+
+        comp = self.request.GET.get('compare')
+
+        if comp:
+            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(comp)
+            result = result.filter(
+                reduce(operator.or_,
+                       (Q(pk=q) for q in query_list)))
+        self.compared_dog_foods = result.distinct()
+        return result.distinct()
 
 
 def preview_food(request, id):

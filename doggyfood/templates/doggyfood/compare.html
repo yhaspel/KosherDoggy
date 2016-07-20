@@ -1,11 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>TEST COMPARE PAGE</h1>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% load ratings %}
+{% block content %}
 
-</body>
-</html>
+    {% if object_list.count %}
+        <div class="row row-comp">
+            {% for object in object_list %}
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card-comp" id="card_{{ object.id }}">
+                        {% if object.photo %}
+                            <img class="card-img-comp" id="img_{{ object.id }}" src="{{ object.photo.url }}">
+                        {% else %}
+                            <img class="card-img-comp" id="img_{{ object.id }}" alt="No Image">
+                        {% endif %}
+
+                        <div class="card-content-comp" id="content_{{ object.id }}">
+                            <a href="{% url "doggyfood:preview" id=object.id %}">
+                                <p>Preview this product</p>
+                            </a>
+                            <h4 class="title">{{ object.title }}</h4>
+                            <hr>
+                            <div class="rating-preview">
+                                {% ratings object %}
+                            </div>
+                            <hr>
+                            <div class="ing-nut-comp" id="ing-nut_{{ object.id }}">
+                                <div class="common-ing">
+                                    <b>Ingredients in common:</b>
+                                    <ul>
+                                        {% for ing in view.get_ing_comparison %}
+                                            <li>{{ ing }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <hr>
+                                <b>Ingredients: </b>
+                                <ul>
+                                    {% for ing in object.get_ingredient_composition %}
+                                        <li class="ingredients-comp">{{ ing }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <b>Nutritional Composition: </b>
+                                <ul>
+                                    {% for nut in object.get_nutritional_composition %}
+                                        <li class="nutritional-comp">{{ nut }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    {% else %}
+        Woof! Nothing to show...
+    {% endif %}
+
+{% endblock %}

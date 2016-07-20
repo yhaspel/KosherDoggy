@@ -22,14 +22,34 @@ body {
     box-shadow: 5px 5px 5px #888888;
 }
 
+.card-comp {
+    overflow: hidden;
+    margin: 1em;
+    background-color: skyblue;
+    height: auto;
+    border: 1px solid grey;
+    border-radius: 1em;
+    box-shadow: 5px 5px 5px #888888;
+}
+
 .card-content {
     margin: 1em;
     overflow: hidden;
     height: 55%;
     line-height: 1.5em;
-    text-decoration: none;
     color: black;
     text-decoration: none;
+}
+
+.card-content-comp {
+    margin: 1em;
+    height: auto;
+    line-height: 1.5em;
+    color: black;
+}
+
+.check-compare {
+    margin: 1em;
 }
 
 .description {
@@ -41,13 +61,23 @@ body {
     height: 33%; /* fallback */
 }
 
-.ingredients,.nutritional-comp{
+.ingredients {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.card-link,.card-link:hover {
+.common-ing {
+    color: darkgreen;
+}
+
+.nutritional {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-link, .card-link:hover {
     color: black;
     text-decoration: none;
 }
@@ -55,6 +85,8 @@ body {
 .ing-nut {
     height: 30%;
 }
+
+
 
 .card:hover {
     box-shadow: 1px 1px 1px #888888;
@@ -74,10 +106,12 @@ body {
     transform: translateX(5px);
 }
 
-.card-img {
+.card-img, .card-img-comp {
     height: 40%;
     width: 100%;
 }
+
+
 
 .page {
     width: 80%;
@@ -112,6 +146,11 @@ body {
 
 .searchbar {
     display: flex;
+    justify-content: space-between;
+}
+
+.row-comp {
+    display: flex;
     justify-content: space-around;
 }
 
@@ -136,6 +175,16 @@ body {
     height: 0;
 }
 
+#compare-list-input {
+    visibility: hidden;
+    height: 0;
+}
+
 .rating-preview {
     pointer-events: none;
+}
+
+.compare-btn {
+    display: flex;
+    justify-content: center;
 }

@@ -20,10 +20,10 @@
             <p>{{ object.category.all | join:', ' }}</p>
             <br>
             <h4>Ingredients</h4>
-            <p>{{ ingredients_composition }}</p>
+            <p>{{ ingredients_composition | join:', ' }}</p>
             <br>
             <h4>Nutritional Composition:</h4>
-            <p>{{ nutritional_composition }}</p>
+            <p>{{ nutritional_composition | join:', ' }}</p>
             <br>
             <div class="rating-preview">
                 {% ratings object %}

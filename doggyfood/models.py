@@ -1,5 +1,6 @@
 import os
 
+from django.contrib import messages
 from django.contrib.contenttypes.fields import GenericRelation
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -87,15 +88,10 @@ class DogFood(models.Model):
 
     ratings = GenericRelation(Rating, related_query_name='dogfoods')
 
-    compare = models.BooleanField(default=True)
-
-    def set_compare(self):
-        self.compare = True
-
     def get_rating_avg(self):
         return self.ratings
 
-    def get_ingredient_composition(self):
+    def get_ingredient_composition(self, as_dict=False):
         ingredients = self.ingredients.all()
         ing_comps = IngredientComposition.objects.all()
         ing_with_comp = {}
@@ -113,15 +109,18 @@ class DogFood(models.Model):
             if ing_with_comp[iwc] != '':
                 ing_str += ': {}'.format(ing_with_comp[iwc])
             iwc_list.append(ing_str)
-        return ', '.join(iwc_list)
+        if as_dict:
+            return ing_with_comp
+        else:
+            return iwc_list
 
-    def get_nutritional_composition(self):
+    def get_nutritional_composition(self, as_dict=False):
         nutritional_facts = NutritionalFact.objects.all()
         nut_comps = NutritionalComposition.objects.all()
         nut_with_comp = {}
 
-        for ing in nutritional_facts:
-             nut_with_comp[ing.name] = ''
+        for nut in nutritional_facts:
+             nut_with_comp[nut.name] = ''
 
         for nwc in nut_with_comp:
             for nut_comp in nut_comps:
@@ -133,7 +132,10 @@ class DogFood(models.Model):
             if nut_with_comp[nwc] != '':
                 nut_str += '{}: {}%'.format(nwc, nut_with_comp[nwc])
                 nwc_list.append(nut_str)
-        return ', '.join(nwc_list)
+        if as_dict:
+            return nut_with_comp
+        else:
+            return nwc_list
 
     def get_ing_comp(self):
         return self.ingredients

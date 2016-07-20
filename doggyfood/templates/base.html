@@ -80,6 +80,12 @@
             </div>
             <input class="form-control search" id="category-select" name="category" type="text"/>
         </form>
+        <form id="search-form" action="{% url 'doggyfood:compare' %}" method="get" accept-charset="utf-8">
+            <input type="text" id="compare-list-input" name="compare">
+            <div class="compare-btn">
+                <button type="submit" class="btn btn-primary">Compare</button>
+            </div>
+        </form>
     {% endif %}
 
     <div>
