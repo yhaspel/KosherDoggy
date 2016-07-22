@@ -10,8 +10,8 @@ Initial setup for this project:
 * Clone the project into the folder you’re working on
 * Install  requirements: pip install –r “requirements.txt”
 * To populate database with some data, open python console on your project:
-    from doggyfood.dbpopulator import populate_all
-    populate_all()
+*   from doggyfood.dbpopulator import populate_all
+*   populate_all()
 
 
 Guide:
