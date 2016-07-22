@@ -13,12 +13,12 @@ $(function () {
             var btnText = $(this).html();
             if (btnText === 'Show Filters') {
                 $('#show-filter-btn').html('Hide Filters');
-                $('#checkbox-group').stop().slideDown().css('visibility', 'visible');
+                $('#checkbox-group').stop(true).slideDown().css('visibility', 'visible');
                 $('#checkbox-group  input:checkbox').prop('checked', false);
             }
             else {
                 $('#show-filter-btn').html('Show Filters');
-                $('#checkbox-group').stop().slideUp().css('visibility', 'hidden');
+                $('#checkbox-group').stop(true).slideUp().css('visibility', 'hidden');
                 $('#checkbox-group  input:checkbox').prop('checked', true);
             }
         });
@@ -36,7 +36,7 @@ $(function () {
             $('#search-box').val(searchText.split(';')[0]);
         });
 
-        var inHover = function () {
+        var revealCardInfo = function () {
             var currId = '#' + $(this).attr('id');
             if ($(this).attr('class') === 'glyphicon glyphicon-chevron-up') {
                 $(this).attr('class', 'glyphicon glyphicon-chevron-down')
@@ -45,7 +45,7 @@ $(function () {
                 var ingNutId = '#ing-nut_' + currId.split('_')[1];
                 var descId = '#desc_' + currId.split('_')[1];
                 // var compId = '#check_' + cardId.split('_')[1];
-                $(imgId).slideUp(300);
+                $(imgId).stop(true).slideUp(300);
                 $(contentId).css('height', '95%');
                 $(ingNutId).css('height', '20%');
                 $(descId).css('height', '20%');
@@ -69,7 +69,7 @@ $(function () {
         var cardHoverIn = function () {
             var cardId = '#' + $(this).attr('id');
             var cardReveal = '#card-reveal_' + cardId.split('_')[1];
-            $(cardReveal).click(inHover)
+            $(cardReveal).click(revealCardInfo)
         };
 
         $('.card').hover(cardHoverIn)
