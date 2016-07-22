@@ -3,103 +3,90 @@
  */
 $(function () {
         var category = "";
-        var compList = "";
+        var searchText = "";
+
         $('.compare-btn .btn-primary').prop('disabled', true);
         $('#checkbox-group').slideUp(0).css('visibility', 'hidden');
         $('input:checkbox').prop('checked', false);
         $('.search-group .checkbox-group').prop('checked', true);
-        $('#all').click(function () {
-            $('#checkbox-group').slideUp().css('visibility', 'hidden');
-            $('#checkbox-group  input:checkbox').prop('checked', true);
+        $('#show-filter-btn').click(function () {
+            var btnText = $(this).html();
+            if (btnText === 'Show Filters') {
+                $('#show-filter-btn').html('Hide Filters');
+                $('#checkbox-group').stop().slideDown().css('visibility', 'visible');
+                $('#checkbox-group  input:checkbox').prop('checked', false);
+            }
+            else {
+                $('#show-filter-btn').html('Show Filters');
+                $('#checkbox-group').stop().slideUp().css('visibility', 'hidden');
+                $('#checkbox-group  input:checkbox').prop('checked', true);
+            }
         });
 
-        $('#custom').click(function () {
-            $('#checkbox-group').slideDown().css('visibility', 'visible');
-            $('#checkbox-group  input:checkbox').prop('checked', false);
+        $('#search-box').on('change', function () {
+            searchText = $('#search-box').val();
+        });
+
+        $('#search-box').focusin(function () {
+            searchText = $('#search-box').val();
+            $('#search-box').val('');
+        });
+
+        $('#search-box').focusout(function () {
+            $('#search-box').val(searchText.split(';')[0]);
         });
 
         var inHover = function () {
-            var contentId = '#' + $(this).attr('id');
-            var cardId = '#card_' + contentId.split('_')[1];
-            var imgId = '#img_' + cardId.split('_')[1];
-            var ingNutId = '#ing-nut_' + cardId.split('_')[1];
-            var descId = '#desc_' + cardId.split('_')[1];
-            var compId = '#check_' + cardId.split('_')[1];
-            $(imgId).slideUp(300);
-            $(contentId).css('height', '95%');
-            $(ingNutId).css('height', '20%');
-            $(descId).css('height', '20%');
+            var currId = '#' + $(this).attr('id');
+            if ($(this).attr('class') === 'glyphicon glyphicon-chevron-up') {
+                $(this).attr('class', 'glyphicon glyphicon-chevron-down')
+                var contentId = '#content_' + currId.split('_')[1];
+                var imgId = '#img_' + currId.split('_')[1];
+                var ingNutId = '#ing-nut_' + currId.split('_')[1];
+                var descId = '#desc_' + currId.split('_')[1];
+                // var compId = '#check_' + cardId.split('_')[1];
+                $(imgId).slideUp(300);
+                $(contentId).css('height', '95%');
+                $(ingNutId).css('height', '20%');
+                $(descId).css('height', '20%');
+            }
+            else {
+                $(this).attr('class', 'glyphicon glyphicon-chevron-up')
+                var cardId = $(this).attr('id');
+                var imgId = '#img_' + cardId.split('_')[1];
+                var contentId = '#content_' + cardId.split('_')[1];
+                var ingNutId = '#ing-nut_' + cardId.split('_')[1];
+                var descId = '#desc_' + cardId.split('_')[1];
+                $(contentId).css('height', '55%');
+                $(imgId).slideDown(300);
+                $(contentId).css('height', '55%');
+                $(ingNutId).css('height', '30%');
+                $(descId).css('height', '33%');
+            }
 
         };
-        var exitHover = function () {
-            var cardId = $(this).attr('id');
-            var imgId = '#img_' + cardId.split('_')[1];
-            var contentId = '#content_' + cardId.split('_')[1];
-            var ingNutId = '#ing-nut_' + cardId.split('_')[1];
-            var descId = '#desc_' + cardId.split('_')[1];
-            $(contentId).css('height', '55%');
-            $(imgId).slideDown(300);
-            $(contentId).css('height', '55%');
-            $(ingNutId).css('height', '30%');
-            $(descId).css('height', '33%');
-        };
 
-        $('.card-content').hover(inHover, exitHover);
-
-        var compHover = function () {
+        var cardHoverIn = function () {
             var cardId = '#' + $(this).attr('id');
-            var compId = '#check_' + cardId.split('_')[1];
-            $(compId).click(function () {
-                if ($(compId).is(':checked')) {
-                    compList += cardId.split('_')[1] + ',';
-                    var temp = compList.split(',');
-                    temp = jQuery.uniqueSort(temp);
-                    if (temp.length > 2) {
-                        $('.compare-btn .btn-primary').prop('disabled', false);
-                    }
-                    else {
-                        $('.compare-btn .btn-primary').prop('disabled', true);
-                    }
-                    compList = '';
-                    for (var i = 0; i < temp.length; i++) {
-                        if (temp[i] != ',' && temp[i] != '') {
-                            compList += temp[i] + ',';
-                        }
-                    }
-                }
-                else {
-                    var temp = compList.split(',');
-                    temp = jQuery.uniqueSort(temp);
-                    for (var i = 0; i < temp.length; i++) {
-                        if (temp[i] === cardId.split('_')[1]) {
-                            temp[i] = '';
-                            compList.replace(cardId.split('_')[1], '');
-                        }
-                    }
-                    if (temp.length > 2) {
-                        $('.compare-btn .btn-primary').prop('disabled', false);
-                    }
-                    else {
-                        $('.compare-btn .btn-primary').prop('disabled', true);
-                    }
-                    compList = "";
-
-                    for (var i = 0; i < temp.length; i++) {
-                        if (temp[i] != ',' && temp[i] != '') {
-                            compList += temp[i] + ',';
-                        }
-                    }
-
-                }
-                $('#compare-list-input').val(compList.substr(0, compList.length - 1));
-            });
+            var cardReveal = '#card-reveal_' + cardId.split('_')[1];
+            $(cardReveal).click(inHover)
         };
 
-        var compExit = function () {
+        $('.card').hover(cardHoverIn)
 
-        };
 
-        $('.card').hover(compHover, compExit);
+        $('.compare-check').click(function () {
+            var checked = $('.check-compare input:checked').length
+            if (checked > 1) {
+                var btnText = 'Compare ' + checked + ' Products'
+                $('#compare-submit').html(btnText);
+                $('#compare-submit').prop('disabled', false);
+            }
+            else {
+                $('#compare-submit').html('Compare');
+                $('#compare-submit').prop('disabled', true);
+            }
+        });
 
         $('#checkbox-group input:checkbox').change(function () {
             if ($(this).is(':checked')) {

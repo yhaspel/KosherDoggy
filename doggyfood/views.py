@@ -63,6 +63,9 @@ class ListFoodsView(ListView):
     model = models.DogFood
     paginate_by = 12
     page_title = _("Home")
+    search_text = ''
+    exclude_text = ''
+
 
     def search(self):
         return "active"
@@ -82,10 +85,12 @@ class ListFoodsView(ListView):
 
         cat = self.request.GET.get('category')
         query = self.request.GET.get('q')
+
         exc = self.request.GET.get('exclude')
 
         if query:
             query_list = re.compile("^\s+|\s*,\s*|\s+$").split(query)
+            self.search_text = ', '.join(query_list)
             result = result.filter(
                 reduce(operator.or_,
                        (Q(ingredients__name__icontains=q) for q in query_list)) |
@@ -96,19 +101,19 @@ class ListFoodsView(ListView):
             )
         if exc:
             query_list = re.compile("^\s+|\s*,\s*|\s+$").split(exc)
+            self.exclude_text = ', '.join(query_list)
             result = result.exclude(
                 reduce(operator.or_,
                        (Q(ingredients__name__icontains=q) for q in query_list)))
-
         if cat:
             query_list = re.compile("^\s+|\s*,\s*|\s+$").split(cat)
-            messages.success(self.request, query_list)
             result = result.filter(
                 reduce(operator.or_,
                        (Q(category__name__icontains=q) for q in query_list)))
             result = result.exclude(
                 reduce(operator.or_,
                        (~Q(category__name__icontains=q) for q in query_list)))
+            self.search_text += '; Categories: ' + ', '.join(query_list)
 
         return result.distinct()
 
@@ -126,19 +131,18 @@ class ListCompareFoodsView(ListView):
         for i in range(1, len(self.compared_dog_foods)):
             comp = comp & set(self.compared_dog_foods[i].ingredients.all()) & set(
                 self.compared_dog_foods[i - 1].ingredients.all())
-
+        #  set.intersection(*[set(..) for ... in ...])
         return list(comp)
 
     def get_queryset(self):
         result = super(ListCompareFoodsView, self).get_queryset()
 
-        comp = self.request.GET.get('compare')
+        comp = self.request.GET.getlist('compare')
 
         if comp:
-            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(comp)
             result = result.filter(
                 reduce(operator.or_,
-                       (Q(pk=q) for q in query_list)))
+                       (Q(pk=q) for q in comp)))
         self.compared_dog_foods = result.distinct()
         return result.distinct()
 

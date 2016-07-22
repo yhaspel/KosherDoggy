@@ -19,7 +19,7 @@ body {
     height: 35em;
     border: 1px solid grey;
     border-radius: 1em;
-    box-shadow: 5px 5px 5px #888888;
+    box-shadow: 3px 3px 3px #888888;
 }
 
 .card-comp {
@@ -86,32 +86,28 @@ body {
     height: 30%;
 }
 
-
-
 .card:hover {
     box-shadow: 1px 1px 1px #888888;
-    -webkit-transform: translateX(4px);
-    -moz-transform: translateX(4px);
-    -ms-transform: translateX(4px);
-    -o-transform: translateX(4px);
-    transform: translateX(4px);
+    -webkit-transform: translateX(2px);
+    -moz-transform: translateX(2px);
+    -ms-transform: translateX(2px);
+    -o-transform: translateX(2px);
+    transform: translateX(2px);
 }
 
 .card:active {
     box-shadow: 0px 0px 0px #888888;
-    -webkit-transform: translateX(5px);
-    -moz-transform: translateX(5px);
-    -ms-transform: translateX(5px);
-    -o-transform: translateX(5px);
-    transform: translateX(5px);
+    -webkit-transform: translateX(3px);
+    -moz-transform: translateX(3px);
+    -ms-transform: translateX(3px);
+    -o-transform: translateX(3px);
+    transform: translateX(3px);
 }
 
 .card-img, .card-img-comp {
     height: 40%;
     width: 100%;
 }
-
-
 
 .page {
     width: 80%;
@@ -130,16 +126,22 @@ body {
 }
 
 #search-box {
-    width: 60%;
+    width: 57%;
 }
 
 #exclude-box {
-    width: 29%;
+    width: 26%;
     margin-left: 1%;
 }
 
 #search-btn {
     min-width: 5em;
+    width: 7%;
+    margin-left: 1%;
+}
+
+#show-filter-btn {
+    min-width: 8em;
     width: 9%;
     margin-left: 1%;
 }
@@ -185,6 +187,53 @@ body {
 }
 
 .compare-btn {
+    position: fixed;
+    bottom: 0;
+    height: auto;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    /*background: green;*/
     display: flex;
     justify-content: center;
+}
+
+#search-form {
+    border: 1px solid grey;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 1px #888888;
+}
+
+.form-interior {
+    padding: 1%;
+}
+
+.compare-btn {
+    padding: 1%;
+}
+
+.icon-buttons {
+    margin-top: 1%;
+    float: right;
+    margin-right: 5%;
+}
+
+.card-top {
+    margin: 1%;
+    font-size: large;
+}
+
+.check-compare {
+    margin-top: 1%;
+}
+
+.glyphicon {
+    cursor: hand;
+}
+
+.icon-buttons {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
 }
