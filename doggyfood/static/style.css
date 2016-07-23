@@ -24,9 +24,10 @@ body {
 
 .card-comp {
     overflow: hidden;
-    margin: 1em;
+    margin: 10%;
     background-color: skyblue;
     height: auto;
+    width: 90%;
     border: 1px solid grey;
     border-radius: 1em;
     box-shadow: 5px 5px 5px #888888;
@@ -153,7 +154,7 @@ body {
 
 .row-comp {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .radio-selection {
@@ -193,7 +194,6 @@ body {
     z-index: 1000;
     left: 0;
     right: 0;
-    /*background: green;*/
     display: flex;
     justify-content: center;
 }

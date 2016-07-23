@@ -35,12 +35,15 @@
                                     </ul>
                                 </div>
                                 <hr>
-                                <b>Ingredients: </b>
+                                <h4>Ingredients</h4>
                                 <ul>
-                                    {% for ing in object.get_ingredient_composition %}
-                                        <li class="ingredients-comp">{{ ing }}</li>
+                                    {% for ing in object.ingredients.all %}
+                                        <li><a href="#" data-toggle="tooltip"
+                                               title="{{ ing.description }}">{{ ing }}</a></li>
                                     {% endfor %}
                                 </ul>
+                                <b>Ingredients composition: </b>
+                                <p>{{ object.get_ingredient_composition | join:', ' }}</p>
                                 <b>Nutritional Composition: </b>
                                 <ul>
                                     {% for nut in object.get_nutritional_composition %}

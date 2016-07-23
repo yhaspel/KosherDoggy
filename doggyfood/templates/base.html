@@ -70,7 +70,7 @@
                                 <h4>{{ t }}</h4>
                                 {% for cat in view.get_categories|dictsort:"type" %}
                                     {% if t == cat.type_verbose %}
-                                        <div class="checkbox"><label><input type="checkbox" value="{{ cat }}">{{ cat }}
+                                        <div class="checkbox"><label><input name="category" value="{{ cat }}" type="checkbox">{{ cat }}
                                         </label>
                                         </div>
                                     {% endif %}
@@ -79,7 +79,6 @@
                         {% endfor %}
                     </div>
                 </div>
-                <input class="form-control search" id="category-select" name="category" type="text"/>
             </div>
         </form>
     {% endif %}

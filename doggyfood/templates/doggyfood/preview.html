@@ -20,6 +20,12 @@
             <p>{{ object.category.all | join:', ' }}</p>
             <br>
             <h4>Ingredients</h4>
+            <ul>
+                {% for ing in object.ingredients.all %}
+                    <li><a href="#" data-toggle="tooltip" title="{{ ing.description }}">{{ ing }}</a></li>
+                {% endfor %}
+            </ul>
+            <h4>Ingredient Composition</h4>
             <p>{{ ingredients_composition | join:', ' }}</p>
             <br>
             <h4>Nutritional Composition:</h4>

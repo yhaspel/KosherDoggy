@@ -65,7 +65,7 @@ class ListFoodsView(ListView):
     page_title = _("Home")
     search_text = ''
     exclude_text = ''
-
+    checked_list = []
 
     def search(self):
         return "active"
@@ -83,9 +83,8 @@ class ListFoodsView(ListView):
     def get_queryset(self):
         result = super(ListFoodsView, self).get_queryset()
 
-        cat = self.request.GET.get('category')
+        cat = self.request.GET.getlist('category')
         query = self.request.GET.get('q')
-
         exc = self.request.GET.get('exclude')
 
         if query:
@@ -106,15 +105,14 @@ class ListFoodsView(ListView):
                 reduce(operator.or_,
                        (Q(ingredients__name__icontains=q) for q in query_list)))
         if cat:
-            query_list = re.compile("^\s+|\s*,\s*|\s+$").split(cat)
             result = result.filter(
                 reduce(operator.or_,
-                       (Q(category__name__icontains=q) for q in query_list)))
+                       (Q(category__name__icontains=q) for q in cat)))
             result = result.exclude(
                 reduce(operator.or_,
-                       (~Q(category__name__icontains=q) for q in query_list)))
-            self.search_text += '; Categories: ' + ', '.join(query_list)
-
+                       (~Q(category__name__icontains=q) for q in cat)))
+            self.checked_list = cat
+            # self.search_text += '; ' + ', '.join(cat)
         return result.distinct()
 
 
