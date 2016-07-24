@@ -1,0 +1,17 @@
+{% extends "base_authentication.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-default">Submit</button>
+    </form>
+
+    <div class="reg-user">
+        <span>
+            Don't have a user?
+            <a href="{% url 'authentication:register' %}">Click here.</a>
+        </span>
+    </div>
+{% endblock %}
+

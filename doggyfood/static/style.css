@@ -9,11 +9,11 @@ body {
 .header-link, .header-link:hover {
     color: black;
     text-decoration: none;
+    margin: 1%;
 }
 
 .card {
     overflow: hidden;
-    /*padding: 1em;*/
     margin: 1em;
     background-color: skyblue;
     height: 35em;
@@ -236,4 +236,11 @@ body {
     width: 20%;
     display: flex;
     justify-content: space-between;
+}
+
+.logo-pic {
+    width: 10%;
+    position: static;
+    z-index: 3;
+    float: left;
 }

@@ -1,0 +1,18 @@
+{% extends "base_authentication.html" %}
+
+{% block content %}
+    <form class="form-group" method="post">
+        {% csrf_token %}
+        <label for="id_username">Username:</label>
+        <input class="form-control" id="id_username" maxlength="30" name="username" type="text"/><br/>
+        <div class="helptext">Letters, digits and @/./+/-/_ only.
+        </div>
+        <label c for="id_password1">Password:</label>
+        <input class="form-control" id="id_password1" name="password1" type="password"/>
+        <label for="id_password2">Password confirmation:</label>
+        <input class="form-control" id="id_password2" name="password2" type="password"/>
+        <br/>
+        <div class="helptext">Enter the same password as before, for verification.</div>
+        <input class="btn center-block" type="submit" value="Register" style="width: 40%;">
+    </form>
+{% endblock %}

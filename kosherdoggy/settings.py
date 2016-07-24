@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # mine
     'doggyfood',
+    'authentication',
 ]
 
 MIDDLEWARE_CLASSES = [

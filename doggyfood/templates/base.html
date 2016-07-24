@@ -26,22 +26,24 @@
 
 <div class="container">
 
-    {% comment %}<div class="pull-right">
-        {#        <a href="{% url "blog:list" %}">Blog</a>#}
-        {#        |#}
-        {#        <a href="{% url "expenses:create_account" %}">Add Account</a>#}
-        {#        |#}
-        {#        <a href="{% url "expenses:create" %}">Add Expense</a>#}
-        {#        |#}
-        {#        {{ user }}#}
-        {#        |#}
-        {#        <a href="{% url 'logout' %}">Logout</a>#}
-    </div>{% endcomment %}
+    <div style="float:right">
+        <a href="{% url "doggyfood:list" %}">Home</a>
+        |
+        {{ user }}
+        |
+        <a href="{% url 'authentication:password_change' %}">Change Password</a>
+        |
+        <a href="{% url 'authentication:logout' %}">Logout</a>
+    </div>
 
     <a class="header-link" href="{% url "doggyfood:list" %}">
+        <span>
+        <img class="logo-pic"
+             src="{% static "KosherDoggyLogo.png" %}">
         <h1>
             Kosher Doggy
         </h1>
+        </span>
     </a>
 
     {% bootstrap_messages %}
@@ -70,7 +72,8 @@
                                 <h4>{{ t }}</h4>
                                 {% for cat in view.get_categories|dictsort:"type" %}
                                     {% if t == cat.type_verbose %}
-                                        <div class="checkbox"><label><input name="category" value="{{ cat }}" type="checkbox">{{ cat }}
+                                        <div class="checkbox"><label><input name="category" value="{{ cat }}"
+                                                                            type="checkbox">{{ cat }}
                                         </label>
                                         </div>
                                     {% endif %}
