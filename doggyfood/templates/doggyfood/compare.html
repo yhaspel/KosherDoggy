@@ -16,7 +16,7 @@
                         {% endif %}
 
                         <div class="card-content-comp" id="content_{{ object.id }}">
-                            <a href="{% url "doggyfood:preview" id=object.id %}">
+                            <a href="{% url "doggyfood:preview" pk=object.id %}">
                                 <p>Preview this product</p>
                             </a>
                             <h4 class="title">{{ object.title }}</h4>
