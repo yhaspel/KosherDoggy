@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap3 staticfiles %}
 {% load ratings %}
 
 {% block content %}
@@ -28,12 +28,37 @@
             <h4>Ingredient Composition</h4>
             <p>{{ ingredients_composition | join:', ' }}</p>
             <br>
-            <h4>Nutritional Composition:</h4>
+            <h4>Nutritional Composition</h4>
             <p>{{ nutritional_composition | join:', ' }}</p>
             <br>
             <div class="rating-preview">
                 {% ratings object %}
             </div>
+
         </div>
+            <a href=""></a>
+            <div class="panel panel-default add-review-form">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add review</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" id="reviewform">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button class="btn btn-primary" id="send">Send Review</button>
+                    </form>
+                </div>
+            </div>
+            <ul class="list-group" id="reviews">
+                <h4>Reviews</h4>
+                {% for review in object.reviews.all %}
+                    {% include "doggyfood/_review.html" %}
+                {% endfor %}
+            </ul>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "js/csrf.js" %}"></script>
+    <script src="{% static "js/dogfood_detail.js" %}"></script>
 {% endblock %}

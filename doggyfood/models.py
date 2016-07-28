@@ -7,6 +7,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from star_ratings.models import Rating
 
+from django.conf import settings
+
 
 class Category(models.Model):
     LIFE_STAGE = 'LS'
@@ -140,8 +142,22 @@ class DogFood(models.Model):
     def get_ing_comp(self):
         return self.ingredients
 
+    def get_absolute_url(self):
+        return reverse("doggyfood:preview", args=(self.pk,))
+
     # def get_absolute_url(self):
     #     return reverse("doggyfood:detail", args=(self.pk,))
+    def __str__(self):
+        return self.title
+
+
+class Review(models.Model):
+    dogfood = models.ForeignKey(DogFood, related_name="reviews")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="reviews")
+    created_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=300)
+    content = models.TextField()
+
     def __str__(self):
         return self.title
 

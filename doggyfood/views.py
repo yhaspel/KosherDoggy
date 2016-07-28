@@ -10,7 +10,8 @@ from django.utils.encoding import escape_uri_path
 from django.views.generic import ListView
 from django.utils.translation import ugettext_lazy as _
 from authentication.models import LoggedInMixin, redirect_not_usr
-from . import models
+from . import models, forms
+from django.views.generic.detail import DetailView
 
 
 class ListFoodsView(LoggedInMixin, ListView):
@@ -97,16 +98,41 @@ class ListCompareFoodsView(LoggedInMixin, ListView):
         return result.distinct()
 
 
-def preview_food(request, id):
-    result = redirect_not_usr(request)
-    if result:
-        return result
-    return render(request, "doggyfood/preview.html",
-                  {
-                      'object': models.DogFood.objects.filter(pk=id).first(),
-                      'ingredients_composition': models.DogFood.objects.filter(
-                          pk=id).first().get_ingredient_composition(),
-                      'nutritional_composition': models.DogFood.objects.filter(
-                          pk=id).first().get_nutritional_composition(),
-                  }
-                  )
+# def preview_food(request, id):
+#     result = redirect_not_usr(request)
+#
+#     if result:
+#         return result
+#     return render(request, "doggyfood/preview.html",
+#                   {
+#                       'object': models.DogFood.objects.filter(pk=id).first(),
+#                       'ingredients_composition': models.DogFood.objects.filter(
+#                           pk=id).first().get_ingredient_composition(),
+#                       'nutritional_composition': models.DogFood.objects.filter(
+#                           pk=id).first().get_nutritional_composition(),
+#                   }
+#                   )
+
+
+class DogfoodPreview(LoggedInMixin, DetailView):
+    model = models.DogFood
+    template_name = 'doggyfood/preview.html'
+
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        d['form'] = forms.ReviewForm()
+        return d
+
+    def post(self, request, *args, **kwargs):
+        parent = self.get_object()
+        form = forms.ReviewForm(request.POST)
+        form.instance.dogfood = parent
+        form.instance.user = request.user
+        form.save()
+        if request.is_ajax():
+            # return JsonResponse({'status': 'ok'})
+            return render(request, "doggyfood/_review.html", {
+                'review': form.instance,
+            })
+        messages.success(request, "Review saved.")
+        return redirect(parent)

@@ -1,0 +1,12 @@
+{% load humanize %}
+
+
+<li class="list-group-item">
+    <p>
+        <b>
+            {{ review.title }} ({{ review.user }})
+        </b>
+        <i title="{{ review.created_at }}">{{ review.created_at|naturaltime }}</i>
+    </p>
+    {{ review.content|linebreaks }}
+</li>

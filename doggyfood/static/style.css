@@ -244,3 +244,7 @@ body {
     z-index: 3;
     float: left;
 }
+
+.add-review-form {
+    margin-top: 2%;
+}
