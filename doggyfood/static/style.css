@@ -9,7 +9,6 @@ body {
 .header-link, .header-link:hover {
     color: black;
     text-decoration: none;
-    margin: 1%;
 }
 
 .card {
@@ -247,4 +246,16 @@ body {
 
 .add-review-form {
     margin-top: 2%;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-menu {
+    width: 30em;
+    display: inline;
+    float: right;
+    margin: 1%;
 }

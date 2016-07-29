@@ -26,37 +26,42 @@
 
 <div class="container">
 
-    <div style="float:right">
-        <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" onclick="location.href='{% url 'doggyfood:list' %}'">Home</button>
-{#            <button type="button" class="btn btn-default">2</button>#}
 
+    <div class="header-container">
+        <div>
+            <a class="header-link" href="{% url "doggyfood:list" %}">
+                <span>
+                    <img class="logo-pic"
+                         src="{% static "KosherDoggyLogo.png" %}">
+                    <h1>
+                        Kosher Doggy
+                    </h1>
+                </span>
+            </a>
+        </div>
+        <div class="navigation-menu">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user"></span>
-                    {{ user }}
-                    <span class="caret"></span>
+                <button type="button" class="btn btn-default" onclick="location.href='{% url 'doggyfood:list' %}'">Home
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a href="{% url 'authentication:password_change' %}">Change Password</a></li>
-                    <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
-                </ul>
+                <button type="button" class="btn btn-default" onclick="location.href='{% url 'doggyfood:about' %}'">About</button>
+                <button type="button" class="btn btn-default" onclick="location.href='{% url 'doggyfood:contact' %}'">Contact Us</button>
+
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span>
+                        {{ user }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="{% url 'authentication:password_change' %}">Change Password</a></li>
+                        <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
     </div>
-
-    <a class="header-link" href="{% url "doggyfood:list" %}">
-        <span>
-        <img class="logo-pic"
-             src="{% static "KosherDoggyLogo.png" %}">
-        <h1>
-            Kosher Doggy
-        </h1>
-        </span>
-    </a>
-
     {% bootstrap_messages %}
 
     {% if view.search == "active" %}
